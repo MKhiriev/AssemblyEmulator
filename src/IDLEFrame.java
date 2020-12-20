@@ -8,7 +8,6 @@ import javax.swing.text.BadLocationException;
 public class IDLEFrame extends JFrame{
 
     JFrame frame = new JFrame("Assembly IDLE");
-    //ProcessorFrame processor;
     JTextArea textArea = new JTextArea();
     JScrollPane scroller = new JScrollPane(textArea);
     JButton compileButton = new JButton("Compile");
@@ -35,22 +34,9 @@ public class IDLEFrame extends JFrame{
 
         lineNumberComponent.setAlignment(LineNumberComponent.CENTER_ALIGNMENT);
 
-
-
         frame.pack();
         frame.setSize(400,400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    /*textArea.setText("LDA1 ch1\n" +
-                "MRA cx\n" +
-                "LDA2 11\n" +
-                "MRA dx\n" +
-                "DEC cx\n" +
-                "LDA2 0\n" +
-                "ADD dx\n" +
-                "INC dx\n" +
-                "LOOP 6\n" +
-                "RET");*/
 
         textArea.setText("LDA1 ch1\n" +
                 "MRA cx\n" +

@@ -1,28 +1,5 @@
 import java.util.Scanner;
 
-/*
-* TO-DO:
-* * Create loader for programm
-* * Automate Calculation of CommandMemorySize
-* */
-
-
-/*
-* List of Commands:
-* 0. LDA1 [ch1] - Loads in AX value by address in Data Memory
-* 1. MRA reg - Copies AX value into chosen register
-* 2. LDA2 <num> - Loads in AX value by pure Value(not address)
-* 3. ADD [reg] - Adds two values: ax-value and value from address stored in dx, Result in AX
-* 4. INC reg - Increments value of chosen register
-* 5. LOOP <command_num> - Creates for loop, jumps to chosen command in command Memory
-* 6. DEC reg - Decrements value of chosen register
-* 7. RET - Retires from program
-* 8. MUL -
-* 9. ADC <>-
-* 10. LDA3 reg - copies value of chosen register into AX
-* */
-
-
 public class Processor {
 
     private int pc; // Program Counter
@@ -36,7 +13,7 @@ public class Processor {
     private final int dx = 3; // Index of dx register in reg[] Array
     private final int dh = 4; // Index of dh register in reg[] Array
     private final int dl = 5; // Index of dh register in reg[] Array
-    private final int ch1;
+    private final int ch1; // Address of the first value in Data Memory
 
     /*Creation and getting ready Processor for work*/
     public Processor(int numOfRegisters, int dMemorySize, int[] programCommands){
@@ -92,10 +69,6 @@ public class Processor {
             ch1 = Decipher.getCh1(cmd);
             loop = Decipher.getOp1(cmd);
 
-            //Decipher.double8(cmdtype, "CMDType");
-            //Decipher.double8(operand, "Operand");
-            //String.format("\nCMDType[%d]: %s %d", pc, Decipher.getCmd(cmd), operand);
-            //System.out.println("\nCMDtype["+ pc +"]: " + Decipher.getCmd(cmd) + " ");
             System.out.println(String.format("\nCMDType[%d]: %s %d", pc, Decipher.getCmd(cmd), operand));
 
             /*Executing given command depending on its type*/
@@ -118,9 +91,9 @@ public class Processor {
             /*Showing results after execution*/
             showRegisters();
 
-            /*Getting time to observe the results*/
+            /*Getting time to observe the results: Uncomment if needed*/
             //System.out.print("Type any key...\n");
-            // scan.nextLine();
+            //scan.nextLine();
         }
         System.out.println("\nProgram ended...\nResults\nMemH (HighBits): " + memory[memory.length - 2] + "; MemL (LowBits): " + memory[memory.length - 1]);
         System.out.println("#########################################################");
@@ -227,13 +200,7 @@ public class Processor {
         memory[commandMemorySize] = (memory.length - commandMemorySize - 1 - 2);
         for (int i = commandMemorySize; i < memory.length - 1 - 2; i++) {
             memory[i + 1] = (int) (Math.random() * 100);
-            //memory[i + 1] = memory[i + 1] + 300;
         }
-        /*memory = new int[memorySize];
-        memory[commandMemorySize] = (memory.length - commandMemorySize - 1);
-        for (int i = commandMemorySize; i < memory.length - 1; i++) {
-            memory[i + 1] = (int) (Math.random() * 100);
-        }*/
     }
 
     /*Initializing Data Memory Numbers
@@ -329,23 +296,27 @@ public class Processor {
     }
 
     /*
-    * умножаем число в ах на число из памяти данных по адресу записаному в dl
+    * Multiplies two Numbers: from AX reg and Data Memory address stored in chosen reg
+    *
+    * register - chosen register
+    * Result is stored in AX reg
     * */
     public void MUL(int register) {
         reg[ax] = memory[reg[register]] * reg[ax];
     }
 
     /*
-    * сложить значение CF и bx в bx
+    * Adds CF value to a chosen register
     * */
     public void ADC(int register) {
         reg[register] = reg[register] + CF;
     }
 
     /*
-    * сложить число ах и число в памяти данных по адресу указанному
-    * Результат сохраняется в памяти данных по указанному адресу
-    * ЗДЕСЬ УСТАНАВЛИВАЕТСЯ флаг CF
+    * Adds number stored in AX register and Data Memory number accessed by address
+    * dataMemoryAddress - chosen address from Data Memory
+    *
+    * Result is stored in chosen Data Memory address
      * */
     public void ADD2(int dataMemoryAddress ) {
         int limit = 65535;
@@ -361,14 +332,14 @@ public class Processor {
     }
 
     /*
-    * копируем значение из указанного регистра в ax
+    * Copies value from chosen register to AX register
     * */
     public void LDA3(int register) {
         reg[ax] = reg[register];
     }
 
     /*
-    * Загружаем в ах элемент в памяти по адресу в dh
+    * Loads in AX register value from Data Memory accessed by address stored in DH register
     * */
     public void LDA4(int register) {
         reg[ax] = memory[reg[register]];
@@ -380,6 +351,9 @@ public class Processor {
         memory = new int[memorySize];
     }
 
+    /*
+    * This method is ending execution of the program
+    * */
     public void RET() {
         String ret = "RET";
     }
@@ -404,7 +378,6 @@ public class Processor {
         memory[commandMemorySize] = (memory.length - commandMemorySize - emptySlots - 1);
         for (int i = commandMemorySize; i < memory.length - emptySlots - 1; i++) {
             memory[i + 1] = (int) (Math.random() * 256);
-            //memory[i + 1] = i - commandMemorySize + 1;
         }
     }
 
@@ -413,7 +386,6 @@ public class Processor {
 
         int offSet = memory[commandMemorySize] / 2;
         for (int i = commandMemorySize + 1; i < commandMemorySize + offSet + 1; i++) {
-            //System.out.println(String.format("%d * %d = %d -> result = %d + %d = %d", memory[i], memory[i+offSet], (memory[i] * memory[i + offSet]), result, (memory[i] * memory[i + offSet]), ((memory[i] * memory[i + offSet]) + result)));
             result += memory[i] * memory[i + offSet];
         }
         System.out.println(String.format("Svertka Sum = %d", result));

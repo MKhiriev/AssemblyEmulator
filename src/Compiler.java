@@ -5,16 +5,6 @@ public class Compiler {
 
     private int firstDataMemoryAddress;
 
-
-    /*
-    public void executeProgram(String[] instructionsString) {
-        int[] instructions = new int[instructionsString.length];
-        Processor processor = new Processor(6, 20, intCmds);
-
-        processor.executeProgram();
-    }
-    */
-
     /*
     * Converts Array of String instructions into Array of 16 bit Integer programs for the CPU
     *
@@ -75,7 +65,6 @@ public class Compiler {
      * */
     public int operandStringToAddress(String operandString) {
         int operandAddress = 0;
-        //firstDataMemoryAddress = 21; //later CPU will return value
 
         switch (operandString) {
             case "ax": operandAddress = 0; break;
