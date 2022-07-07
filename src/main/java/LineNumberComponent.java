@@ -119,7 +119,7 @@ public class LineNumberComponent extends JComponent{
             Rectangle rect = lineNumberModel.getLineRect(i);
             String text = String.valueOf(i + 1);
             int yPosition = rect.y + rect.height - VERTICAL_PADDING;
-            int xPosition = HORIZONTAL_PADDING;//default to left alignment
+            int xPosition = HORIZONTAL_PADDING;  // default to left alignment
             switch (alignment){
                 case RIGHT_ALIGNMENT:
                     xPosition = getPreferredSize().width - g.getFontMetrics().stringWidth(text) - HORIZONTAL_PADDING;
@@ -127,10 +127,10 @@ public class LineNumberComponent extends JComponent{
                 case CENTER_ALIGNMENT:
                     xPosition = getPreferredSize().width/2 - g.getFontMetrics().stringWidth(text)/2;
                     break;
-                default://left alignment, do nothing
+                default:  // left alignment, do nothing
                     break;
             }
-            g2d.drawString(String.valueOf(i/*+1*/), xPosition, yPosition);
+            g2d.drawString(String.valueOf(i + 1), xPosition, yPosition);
         }
     }
 }

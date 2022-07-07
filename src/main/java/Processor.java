@@ -2,11 +2,6 @@ import java.util.Scanner;
 
 public class Processor {
 
-    private int pc; // Program Counter
-    private int CF; //CF flag
-    private int[] reg; // All Registers in Processor
-    private int[] memory; // Command Memory and Data Memory
-    private int commandMemorySize; // Command Memory Size
     private final int ax = 0; // Index of ax register in reg[] Array
     private final int bx = 1; // Index of bx register in reg[] Array
     private final int cx = 2; // Index of cx register in reg[] Array
@@ -14,9 +9,14 @@ public class Processor {
     private final int dh = 4; // Index of dh register in reg[] Array
     private final int dl = 5; // Index of dh register in reg[] Array
     private final int ch1; // Address of the first value in Data Memory
+    private int pc; // Program Counter
+    private int CF; //CF flag
+    private int[] reg; // All Registers in Processor
+    private int[] memory; // Command Memory and Data Memory
+    private int commandMemorySize; // Command Memory Size
 
     /*Creation and getting ready Processor for work*/
-    public Processor(int numOfRegisters, int dMemorySize, int[] programCommands){
+    public Processor(int numOfRegisters, int dMemorySize, int[] programCommands) {
 
         System.out.println("Starting Initialization... Done!");
         System.out.print("Preparing PC, Registers, Memory for work... ");
@@ -73,27 +73,61 @@ public class Processor {
 
             /*Executing given command depending on its type*/
             switch (cmdtype) {
-                case 0: RET(); pc++; break;
-                case 1: LDA1(ch1); pc++; break;
-                case 2: MRA(operand); pc++; break;
-                case 3: LDA2(operand); pc++; break;
-                case 4: ADD(operand); pc++; break;
-                case 5: INC(operand); pc++; break;
-                case 6: LOOP(loop); break;
-                case 7: DEC(operand); pc++; break; // NEW COMMAND!!!
-                case 8: MUL(operand); pc++; break;
-                case 9: ADC(operand); pc++; break;
-                case 10: ADD2(ch1); pc++; break;
-                case 11: LDA3(operand); pc++; break;
-                case 12: LDA4(operand); pc++; break;
+                case 0:
+                    RET();
+                    pc++;
+                    break;
+                case 1:
+                    LDA1(ch1);
+                    pc++;
+                    break;
+                case 2:
+                    MRA(operand);
+                    pc++;
+                    break;
+                case 3:
+                    LDA2(operand);
+                    pc++;
+                    break;
+                case 4:
+                    ADD(operand);
+                    pc++;
+                    break;
+                case 5:
+                    INC(operand);
+                    pc++;
+                    break;
+                case 6:
+                    LOOP(loop);
+                    break;
+                case 7:
+                    DEC(operand);
+                    pc++;
+                    break;
+                case 8:
+                    MUL(operand);
+                    pc++;
+                    break;
+                case 9:
+                    ADC(operand);
+                    pc++;
+                    break;
+                case 10:
+                    ADD2(ch1);
+                    pc++;
+                    break;
+                case 11:
+                    LDA3(operand);
+                    pc++;
+                    break;
+                case 12:
+                    LDA4(operand);
+                    pc++;
+                    break;
             }
 
             /*Showing results after execution*/
             showRegisters();
-
-            /*Getting time to observe the results: Uncomment if needed*/
-            //System.out.print("Type any key...\n");
-            //scan.nextLine();
         }
         System.out.println("\nProgram ended...\nResults\nMemH (HighBits): " + memory[memory.length - 2] + "; MemL (LowBits): " + memory[memory.length - 1]);
         System.out.println("#########################################################");
@@ -109,7 +143,7 @@ public class Processor {
 
         System.out.print("pc: " + pc + "\n");
         System.out.println("Registers: " + "ax: " + reg[ax] + " bx: " + reg[bx] + " cx: " + reg[cx] + " dx: " + reg[dx] + " dh: " + reg[dh] + " dl: " + reg[dl]);
-        System.out.println("MemH[" + (memory.length - 2) + "] = " + memory[memory.length - 2] + "; MemL[" + (memory.length - 1) + "] = "+ memory[memory.length - 1]);
+        System.out.println("MemH[" + (memory.length - 2) + "] = " + memory[memory.length - 2] + "; MemL[" + (memory.length - 1) + "] = " + memory[memory.length - 1]);
 
     }
 
@@ -147,10 +181,6 @@ public class Processor {
 
         int addressOfSecondNum = commandMemorySize + offSet;
         System.out.println(String.format("2: Address: %d ; Num[%<d] = %d", addressOfSecondNum, memory[addressOfSecondNum]));
-        int svertka = 0;
-
-        //System.out.println("Data Memory Sum = " + dMemSum);
-
     }
 
     /*
@@ -256,6 +286,7 @@ public class Processor {
 
         reg[ax] = reg[ax] + memory[reg[register]];
     }
+
     /*
      * Increments value of chosen register
      * Result is stored in chosen register
@@ -269,10 +300,10 @@ public class Processor {
     }
 
     /*
-    * Decrements value in a given register
-    * register - address of a register in reg[] array
-    * cmdType = 6;
-    * */
+     * Decrements value in a given register
+     * register - address of a register in reg[] array
+     * cmdType = 6;
+     * */
     public void DEC(int register) {
         reg[register]--;
     }
@@ -296,29 +327,29 @@ public class Processor {
     }
 
     /*
-    * Multiplies two Numbers: from AX reg and Data Memory address stored in chosen reg
-    *
-    * register - chosen register
-    * Result is stored in AX reg
-    * */
+     * Multiplies two Numbers: from AX reg and Data Memory address stored in chosen reg
+     *
+     * register - chosen register
+     * Result is stored in AX reg
+     * */
     public void MUL(int register) {
         reg[ax] = memory[reg[register]] * reg[ax];
     }
 
     /*
-    * Adds CF value to a chosen register
-    * */
+     * Adds CF value to a chosen register
+     * */
     public void ADC(int register) {
         reg[register] = reg[register] + CF;
     }
 
     /*
-    * Adds number stored in AX register and Data Memory number accessed by address
-    * dataMemoryAddress - chosen address from Data Memory
-    *
-    * Result is stored in chosen Data Memory address
+     * Adds number stored in AX register and Data Memory number accessed by address
+     * dataMemoryAddress - chosen address from Data Memory
+     *
+     * Result is stored in chosen Data Memory address
      * */
-    public void ADD2(int dataMemoryAddress ) {
+    public void ADD2(int dataMemoryAddress) {
         int limit = 65535;
         CF = 0;
 
@@ -332,15 +363,15 @@ public class Processor {
     }
 
     /*
-    * Copies value from chosen register to AX register
-    * */
+     * Copies value from chosen register to AX register
+     * */
     public void LDA3(int register) {
         reg[ax] = reg[register];
     }
 
     /*
-    * Loads in AX register value from Data Memory accessed by address stored in DH register
-    * */
+     * Loads in AX register value from Data Memory accessed by address stored in DH register
+     * */
     public void LDA4(int register) {
         reg[ax] = memory[reg[register]];
     }
@@ -352,8 +383,8 @@ public class Processor {
     }
 
     /*
-    * This method is ending execution of the program
-    * */
+     * This method is ending execution of the program
+     * */
     public void RET() {
         String ret = "RET";
     }
@@ -417,7 +448,6 @@ public class Processor {
 
         System.out.println("Low + High: BIN = " + MemHString + MemLString + "\nLow + High: DEC = " + Integer.parseInt(MemHString + MemLString, 2));
     }
-
 
 
     public int getPc() {

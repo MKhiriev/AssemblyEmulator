@@ -1,18 +1,18 @@
 public class Compiler {
     /*
-    * This class is written to perform translation of Human Written Commands into Machine Code
-    * */
+     * This class is written to perform translation of Human Written Commands into Machine Code
+     * */
 
     private int firstDataMemoryAddress;
 
     /*
-    * Converts Array of String instructions into Array of 16 bit Integer programs for the CPU
-    *
-    * In: instructionsString array - e.g. {"LDA3 cx", "LDA4 dh", ...}
-    * Out: instructios - e.g. {2818, 3076}
-    * Where: LDA3 cx : 0000101100000010 : 2818
-    *        LDA4 dh : 0000110000000100 : 3076
-    * */
+     * Converts Array of String instructions into Array of 16 bit Integer programs for the CPU
+     *
+     * In: instructionsString array - e.g. {"LDA3 cx", "LDA4 dh", ...}
+     * Out: instructions - e.g. {2818, 3076}
+     * Where: LDA3 cx : 0000101100000010 : 2818
+     *        LDA4 dh : 0000110000000100 : 3076
+     * */
     public int[] compileInstructions(String[] instructionsString) {
         int[] instructions = new int[instructionsString.length];
         String instruction;
@@ -30,28 +30,56 @@ public class Compiler {
     }
 
     /*
-    * Converts String Command into Integer Command Type
-    * In: command in String form - e.g. "MUL"
-    * Out: command Type in Integer - e.g. 8
-    *
-    * */
+     * Converts String Command into Integer Command Type
+     * In: command in String form - e.g. "MUL"
+     * Out: command Type in Integer - e.g. 8
+     *
+     * */
     public int commandStringToType(String commandString) {
         int commandType = 0;
         switch (commandString) {
-            case "RET": commandType = 0; break;
-            case "LDA1": commandType = 1; break;
-            case "MRA": commandType = 2; break;
-            case "LDA2": commandType = 3; break;
-            case "ADD": commandType = 4; break;
-            case "INC": commandType = 5; break;
-            case "LOOP": commandType = 6; break;
-            case "DEC": commandType = 7; break;
-            case "MUL": commandType = 8; break;
-            case "ADC": commandType = 9; break;
-            case "ADD2": commandType = 10; break;
-            case "LDA3": commandType = 11; break;
-            case "LDA4": commandType = 12; break;
-            default: System.out.println(commandString + ": Not Found."); break;
+            case "RET":
+                commandType = 0;
+                break;
+            case "LDA1":
+                commandType = 1;
+                break;
+            case "MRA":
+                commandType = 2;
+                break;
+            case "LDA2":
+                commandType = 3;
+                break;
+            case "ADD":
+                commandType = 4;
+                break;
+            case "INC":
+                commandType = 5;
+                break;
+            case "LOOP":
+                commandType = 6;
+                break;
+            case "DEC":
+                commandType = 7;
+                break;
+            case "MUL":
+                commandType = 8;
+                break;
+            case "ADC":
+                commandType = 9;
+                break;
+            case "ADD2":
+                commandType = 10;
+                break;
+            case "LDA3":
+                commandType = 11;
+                break;
+            case "LDA4":
+                commandType = 12;
+                break;
+            default:
+                System.out.println(commandString + ": Not Found.");
+                break;
         }
 
         return commandType;
@@ -67,15 +95,32 @@ public class Compiler {
         int operandAddress = 0;
 
         switch (operandString) {
-            case "ax": operandAddress = 0; break;
-            case "bx": operandAddress = 1; break;
-            case "cx": operandAddress = 2; break;
-            case "dx": operandAddress = 3; break;
-            case "dh": operandAddress = 4; break;
-            case "dl": operandAddress = 5; break;
-            case "ch1": operandAddress = firstDataMemoryAddress; break;
-            case "": operandAddress = 0; break;
-            default: operandAddress = Integer.parseInt(operandString);
+            case "ax":
+                operandAddress = 0;
+                break;
+            case "bx":
+                operandAddress = 1;
+                break;
+            case "cx":
+                operandAddress = 2;
+                break;
+            case "dx":
+                operandAddress = 3;
+                break;
+            case "dh":
+                operandAddress = 4;
+                break;
+            case "dl":
+                operandAddress = 5;
+                break;
+            case "ch1":
+                operandAddress = firstDataMemoryAddress;
+                break;
+            case "":
+                operandAddress = 0;
+                break;
+            default:
+                operandAddress = Integer.parseInt(operandString);
         }
 
         return operandAddress;
@@ -99,7 +144,7 @@ public class Compiler {
      * Converts String instruction into Binary String program
      *
      * In: binary Instruction String array - "LDA3 cx", "LDA4 dh"
-     * Out: instructios - e.g. "0000101100000010", "0000110000000100"
+     * Out: instructions - e.g. "0000101100000010", "0000110000000100"
      * */
     public String instructionStringToBinaryString(String instruction) {
 

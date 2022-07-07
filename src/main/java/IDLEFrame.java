@@ -1,11 +1,12 @@
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class IDLEFrame extends JFrame{
+public class IDLEFrame extends JFrame {
 
     JFrame frame = new JFrame("Assembly IDLE");
     JTextArea textArea = new JTextArea();
@@ -17,9 +18,7 @@ public class IDLEFrame extends JFrame{
     LineNumberComponent lineNumberComponent = new LineNumberComponent(lineNumberModel);
     Compiler compiler = new Compiler();
 
-    public IDLEFrame(){
-
-
+    public IDLEFrame() {
         scroller.setRowHeaderView(lineNumberComponent);
         frame.getContentPane().add(scroller);
 
@@ -35,30 +34,30 @@ public class IDLEFrame extends JFrame{
         lineNumberComponent.setAlignment(LineNumberComponent.CENTER_ALIGNMENT);
 
         frame.pack();
-        frame.setSize(400,400);
+        frame.setSize(400, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         textArea.setText("LDA1 ch1\n" +
-                "MRA cx\n" +
-                "DEC cx\n" +
-                "LDA2 20\n" +
-                "MRA dh\n" +
-                "LDA2 30\n" +
-                "MRA dl\n" +
-                "LDA2 0\n" +
-                "ADD dh\n" +
-                "MUL dl\n" +
-                "ADD2 41\n" +
-                "LDA2 0\n" +
-                "ADC ax\n" +
-                "ADD2 40\n" +
-                "INC dh\n" +
-                "INC dl\n" +
-                "DEC cx\n" +
-                "LOOP 7\n" +
-                "RET");
+                         "MRA cx\n" +
+                         "DEC cx\n" +
+                         "LDA2 20\n" +
+                         "MRA dh\n" +
+                         "LDA2 30\n" +
+                         "MRA dl\n" +
+                         "LDA2 0\n" +
+                         "ADD dh\n" +
+                         "MUL dl\n" +
+                         "ADD2 41\n" +
+                         "LDA2 0\n" +
+                         "ADC ax\n" +
+                         "ADD2 40\n" +
+                         "INC dh\n" +
+                         "INC dl\n" +
+                         "DEC cx\n" +
+                         "LOOP 7\n" +
+                         "RET");
 
-        textArea.getDocument().addDocumentListener(new DocumentListener(){
+        textArea.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent arg0) {
                 lineNumberComponent.adjustWidth();
@@ -76,7 +75,6 @@ public class IDLEFrame extends JFrame{
         });
 
         frame.setVisible(true);
-
     }
 
     public String[] getCmds() {
@@ -86,26 +84,33 @@ public class IDLEFrame extends JFrame{
         return cmds;
     }
 
-    private class LineNumberModelImpl implements LineNumberModel{
+    public void paintComponent(Graphics g) throws Exception {
+        SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                new IDLEFrame();
+            }
+        });
+    }
+
+    private class LineNumberModelImpl implements LineNumberModel {
         @Override
         public int getNumberLines() {
             return textArea.getLineCount();
         }
 
 
-
         @Override
         public Rectangle getLineRect(int line) {
-            try{
+            try {
                 return textArea.modelToView(textArea.getLineStartOffset(line));
-            }catch(BadLocationException e){
+            } catch (BadLocationException e) {
                 return new Rectangle();
             }
         }
     }
 
     public class CompileButtonListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent event) {
             String[] cmds = getCmds();
@@ -121,7 +126,6 @@ public class IDLEFrame extends JFrame{
     }
 
     public class RunButtonListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent event) {
             String[] cmds = getCmds();
@@ -130,14 +134,5 @@ public class IDLEFrame extends JFrame{
             Processor processor = new Processor(6, 20, intCmds);
             processor.executeProgram();
         }
-    }
-
-    public void paintComponent(Graphics g) throws Exception{
-        SwingUtilities.invokeAndWait(new Runnable(){
-            @Override
-            public void run() {
-                new IDLEFrame();
-            }
-        });
     }
 }
