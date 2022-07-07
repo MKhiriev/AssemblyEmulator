@@ -75,6 +75,8 @@ public class IDLEFrame extends JFrame {
         });
 
         frame.setVisible(true);
+
+        lineNumberComponent.adjustWidth();
     }
 
     public String[] getCmds() {
