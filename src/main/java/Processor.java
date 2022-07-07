@@ -57,7 +57,7 @@ public class Processor {
 
         showAll(); // get Starting state of Processor
 
-        System.out.println("Programm begins!");
+        System.out.println("Programme begins!");
 
         while (pc != commandMemorySize) {
             /*Copying command from Command Memory*/
@@ -283,7 +283,6 @@ public class Processor {
      * cmdType = 3;
      * */
     public void ADD(int register) {
-
         reg[ax] = reg[ax] + memory[reg[register]];
     }
 
@@ -295,7 +294,6 @@ public class Processor {
      * cmdType = 4;
      * */
     public void INC(int op1) {
-
         reg[op1]++;
     }
 
@@ -355,7 +353,7 @@ public class Processor {
 
         if (reg[ax] + memory[dataMemoryAddress] > limit) {
             CF = 1;
-            memory[dataMemoryAddress] = (reg[ax] + memory[dataMemoryAddress]) & limit;
+            memory[dataMemoryAddress] = (reg[ax] + memory[dataMemoryAddress]) - limit;
         } else {
             memory[dataMemoryAddress] = reg[ax] + memory[dataMemoryAddress];
         }
