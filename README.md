@@ -1,7 +1,8 @@
-# AssemblyEmulator
-CPU emulator, it's own assembly commands and compiler.
+![💻AssemblyEmulator💻](https://user-images.githubusercontent.com/44341549/179726483-c3dd0acf-b05d-4704-b0d5-e2e6aeeb71ef.png)
 
-# Run Project
+🖥CPU emulator, it's own assembly commands and compiler.💾
+
+# ▶Run Project
 ## Prerequisites
 - `Java 8+`
 - `Terminal` - `curl` command support
@@ -27,18 +28,18 @@ mvn exec:java
 
 ## For non-Maven users:
 1. Download recent JAR
-
+- From [`Releases` section](https://github.com/MKhiriev/AssemblyEmulator/releases)
 - Using command line (specific version):
 ```bash
 curl -L -O https://github.com/MKhiriev/AssemblyEmulator/releases/download/v1.0.1-SNAPSHOT/AssemblyEmulator-v1.0.1-SNAPSHOT.jar
 ```
-2. Open Terminal and launch AssemblyEmulator
+2. Launch project
 ```bash
 java -jar AssemblyEmulator-v1.0.1-SNAPSHOT.jar
 ```
 
 
-# CPU architecture
+# 💻CPU architecture
 Explanation of inner structure of processor.
 
 * `Bit depth`: 16 bit
@@ -76,7 +77,7 @@ Arrays have the same lengths, consist of numbers
 |---------|----------|----------|
 | `Bits`  | OOOOOOOO | CCCCCCCC |
 
-# Assembly language
+# 📑Assembly language
 | CmdType | Assembly Command | Arguments | Description |
 |---------|------------------|-----------|-------------|
 | 0       | `RET`            | - | Program completion command |
