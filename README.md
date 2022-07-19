@@ -1,6 +1,43 @@
 # AssemblyEmulator
 CPU emulator, it's own assembly commands and compiler.
 
+# Run Project
+## Prerequisites
+- `Java 8+`
+- `Terminal` - `curl` command support
+- `Maven` - optional
+
+## For Maven users:
+
+1. Clone repository
+```bash
+git clone https://github.com/MKhiriev/AssemblyEmulator.git
+```
+
+2. Create executable JAR file
+```bash
+cd AssemblyEmulator
+mvn package
+```
+
+3. Launch project
+```bash
+mvn exec:java
+``` 
+
+## For non-Maven users:
+1. Download recent JAR
+
+- Using command line (specific version):
+```bash
+curl -L -O https://github.com/MKhiriev/AssemblyEmulator/releases/download/v1.0.1-SNAPSHOT/AssemblyEmulator-v1.0.1-SNAPSHOT.jar
+```
+2. Open Terminal and launch AssemblyEmulator
+```bash
+java -jar AssemblyEmulator-v1.0.1-SNAPSHOT.jar
+```
+
+
 # CPU architecture
 Explanation of inner structure of processor.
 
